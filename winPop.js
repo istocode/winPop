@@ -39,19 +39,21 @@
 		head: '',
 
 		/* The stuff that goes between <body></body> in the new window's document
-		 * TODO: Allow for these different methods to add conent to the window's document
+		 * TODO: Allow for these different methods to add content to the window's document
 		 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		 * { IMPLEMENTED }
 		 * [0] If the body option isn't set by user (in this case it is an object by default),
 		 * then grab the innerHTML of the element that called winPop.
 		 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		 * { IMPLEMENTED }
 		 * [1] If the body option is set by user and is an object, see if we have an
 		 * elem property, and if so, get that element's innerHTML/outerHTML -or- the
 		 * innerText depending on the method prop - and fallback to step 0.
 		 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		 * { NOT IMPLEMENTED YET }
-		 * [2] If the body option is set by user and is a string, check if string 
-		 * contains a substring of 'http'. If so, the popup's location is changed 
-		 * to the assuming URL & unrelated props are ignored. 
+		 * [2] If the body option is set by the user and it is a string, check if the
+		 * string is a valid URL. If valid, the popup's location is changed to the
+		 * provided URL & unrelated props are ignored.
 		 *
 		 * NOTE: if the node that called winPop is an <a> tag, we don't retrieve
 		 * the HREF and substitute it for the URL because the anchor's inner-content
@@ -63,10 +65,10 @@
 		 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		*/
 		// The default body options if body isn't set by user
-        body: {
-            elem: '',
-            method: 'html'
-        },       
+		body: {
+			elem: '',
+			method: 'html'
+		},       
 
 
 		/*
@@ -131,7 +133,9 @@
 		},
 
 		/* Two major things happen here:
-		 * [1] The 'browser' property is populated with an actual browser window
+		 * [1] The 'browser' property is populated with an actual browser window, and a new 
+		 * browser window is opened (closing the previous one first)
+		 *
 		 * [2] The browser window document is filled with the contents from the _document object
 		 */
 		openWindow: function () {
@@ -159,7 +163,7 @@
 	//= Popup constructor
 	///////////////////////////////////////////////////////////////////////////////
 	var Popup = function (triggerElem, opts) {
-		// The element that initiated the Popup
+		// The element that initiated the Popup - TODO: Change to 'el' & $el
 		this.trigger = triggerElem;
 		this.$trigger = $(triggerElem);
 
@@ -257,7 +261,9 @@
 
 				// If the provided element isn't a child of trigger look in the whole document
 				if ($providedElem.length === 0) {
-					// This would work well if the $(providedElem) is an #ID... not so well for element & class selectors
+					// This would work well if the $(providedElem) is an #ID, but not so well
+					// for element & class selectors because it would grab everything in the
+					// page that matches those selectors (probably not what you intended)
 					$providedElem = $(providedElem); 
 				}
 
@@ -300,7 +306,7 @@
 			});
 		},
 
-		// Allows for modifications on the options object via a callback
+		// Allows for modifications to the options object via a callback
 		callBeforeOpen: function () {
 			if (this.options.callBefore && $.isFunction(this.options.callBefore)) {
 				this.options.callBefore(this.options);
@@ -315,7 +321,8 @@
 			this.callAfterOpen();
 		},
 
-		// Gives access to the Browser window via a callback (could be used to attach more things to its document, move it, close it...)
+		// Gives access to the Browser window via a callback 
+		// (could be used to attach more things to its document, move it, close it...)
 		callAfterOpen: function () {
 			if (this.options.callAfter && $.isFunction(this.options.callAfter)) {
 				this.options.callAfter(this._window.browser);
