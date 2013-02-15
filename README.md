@@ -1,6 +1,9 @@
 #jQuery winPop
 
-jQuery winPop makes it easy to work with native Browser window popups.
+jQuery winPop makes it easy to work with native Browser windows.
+
+## Demo:
+http://istocode.com/shared/winPop
 
 -------------
 
