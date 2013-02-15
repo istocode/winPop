@@ -1,7 +1,33 @@
 #jQuery winPop
 
 jQuery winPop makes it easy to work with native Browser window popups.
-     
+
+-------------
+
+## Default Settings
+     {
+          width: 600,
+          height: 400,
+          
+          top: 0,
+          left: 0,
+          center: true,
+          
+          title: 'Untitled Document',
+          name: 'newWindow',
+          
+          head: '',
+          body: {
+            elem: '',
+            method: 'html'
+          },  
+          
+          eventName: 'click',
+          delegateElem : '',
+          
+          callBefore: undefined,
+          callAfter: undefined
+     }
 
 
 ## Use
