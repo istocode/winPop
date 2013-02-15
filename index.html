@@ -1,149 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
+<meta charset="utf-8">
 
 <title>jQuery winPop</title>
-<style>
-ul {
-	background: lightblue;
-	padding: 15px;
-	list-style-type: none;
-}
-li {
-	background-color: #f0f0f0;
-	border-bottom: 2px solid #999;
-	margin-bottom: 20px;
-	padding:0 10px;
-}
-span {
-	background-color: #363636;
-	color: white;
-	padding: 2px 4px;
-	position: relative;
-	left: -14px;
-	top: -6px;
-}
-</style>
+<link href="style.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-	<h3 class="title"> jQuery winPop </h3>
-	
-	<div class="popup">
-		<a href="index.html" data-rel="ul-popup">Popup 1</a> <br>
+   <h1 class="page-title" id="jqpop">jQuery winPop</h1>
 
-		<ul>
-			<li>
-				<div>
-					<span>Div content 1 <br> </span>
+   <div class="container">  
+   	<a href="#" class="btn btn-dark" id="popTitle">Pop title</a>
+   </div>
 
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-				</div>
+   <br>
 
-				<blockquote>I am a blockquote!</blockquote>
-			</li>
-			<li>
-				<div>
-					<span>Div content 2 <br> </span>
+   <div class="container">  
+      <a href="#" class="btn btn-sea" id="print">Print me!</a>
+      <div id="ipsum">
+         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
 
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-				</div>
-
-				<blockquote>I am a blockquote!</blockquote>
-			</li>
-			<li>
-				<div>
-					<span>Div content 3 <br> </span>
-
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-				</div>
-
-				<blockquote>I am a blockquote!</blockquote>
-			</li>
-		</ul>
-	</div>
-
-	<br>
-	<br>
-
-	<div class="popup">
-		<a href="index.html" data-rel="ul-popup">Popup 1</a> <br>
-
-		<ul>
-			<li>
-				<div>
-					<span>Div content 4 <br> </span>
-
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-				</div>
-
-				<blockquote>I am a blockquote!</blockquote>
-			</li>
-			<li>
-				<div>
-					<span>Div content 5 <br> </span>
-
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-				</div>
-
-				<blockquote>I am a blockquote!</blockquote>
-			</li>
-			<li>
-				<div>
-					<span>Div content 6 <br> </span>
-
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-				</div>
-
-				<blockquote>I am a blockquote!</blockquote>
-			</li>
-		</ul>
-	</div>
-
-</div>
+         <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+         
+         <p><small>&copy; Lorem Ipsum 2020</small></p>
+      </div>
+   </div>
 </body>
 <script type="text/javascript" src="../jquery.min.js"></script>
 <script type="text/javascript" src="winPop.js"></script>
 <script>
-	var popupHead = '<style>';
-	popupHead += 'body { background:#f0f0f0; color:#232323; } \n';
-	popupHead += 'li { padding:0 10px; background:#f0f0f0; border-bottom:2px solid #999; margin-bottom:20px; list-style:none; } \n';
-	popupHead += 'span { background:#363636; color:white; padding:2px 4px; position:relative; left:-14px; top:-6px; } \n';
-	popupHead += '</style>';
 
-	$('.popup').winPop({
-		top: 2,
-		left: 200,
+   // EXAMPLE 1.0
+   /////////////////////////////////////////////////////////////////////
+   var stylePath = $(document.head).find('link')[0].href;
+   var newWinStyle = '<link href="' + stylePath + '" rel="stylesheet">';
 
-		title: 'Lorem Ipsum',
-		name: 'loremIpsum',
+   $('#popTitle').winPop({
+      width: 820,
+      title: 'jQuery winPop',
 
-		head: popupHead,
-		body: {
-			elem: '',
-			method: 'outerhtml'
-		},
+      head: newWinStyle + '\n <style> body { background: #EAEAEA; } </style> \n',
 
-		delegateElem: 'a[data-rel="ul-popup"]',
+      body: {
+         elem: '#jqpop',
+         method: 'outerhtml'
+      },
 
-		callBefore: function (opts) {
-			//console.log('options: ', opts);
-			opts.title = "New Ipsum";
-		},
+      // Call after the window has popped
+      callAfter: function (browserWin) {
+         var $newWinBody = $(browserWin.document.body);
 
-		callAfter: function (browserWin) {
-			//console.log('browser window: ', browserWin.document);
+         for (var i = 1; i <= 6; i += 1) {
+            $newWinBody.append('<h' + i + ' class="center-text">Welcome to a new window!</h' + i + '>');
+         }
 
-			$(browserWin.document.body).prepend("<h2>Welcome</h2>");
-			//browserWin.print();
-
-			// window.setTimeout(function() {
-			// 	browserWin.close();
-			// }, 2000);
-		}
-	});
+         //console.log('browser window: ', browserWin.document);
+      }      
+   }); 
 
 
+   // EXAMPLE 2.0
+   /////////////////////////////////////////////////////////////////////
+   $('#print').winPop({
+      width: 454,
+      center: false,
+
+      top: 100,
+      left: 500,
+
+      title: 'Ipsum History',
+
+      body: {
+         elem: '#ipsum',
+         method: 'html'
+      },
+
+      // Call after the window has opened
+      callAfter: function (browserWin) {
+         var $newWinBody = $(browserWin.document.body);
+         $newWinBody.prepend('<h1>What is Lorem Ipsum?</h1>');
+
+         browserWin.print();
+      }      
+   });
+   
 </script>
 </html>
