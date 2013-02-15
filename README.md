@@ -30,7 +30,7 @@ jQuery winPop makes it easy to work with native Browser window popups.
      }
 
 
-## Use
+## Example Usage
 Load the plugin file after jQuery
 
     <script type="text/javascript" src="winPop.js"></script>
